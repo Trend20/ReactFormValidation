@@ -17,6 +17,8 @@ class Form extends Component {
     }
     handleChange = (event) =>{
         event.preventDefault();
+        const validEmailRegex = 
+        RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
         const { name, value} = event.target;
         let errors= this.state.errors;
         
@@ -46,6 +48,25 @@ class Form extends Component {
             console.log(errors);
         })
     }
+    // handling the form
+    handleSubmit = (event) => {
+        event.preventDefault();
+        if(validateForm(this.state.errors)) {
+          console.info('Valid Form')
+        }else{
+          console.error('Invalid Form')
+        }
+        const validateForm = (errors) => {
+            let valid = true;
+            Object.values(errors).forEach(
+              // if we have an error string set valid to false
+              (val) => val.length > 0 && (valid = false)
+            );
+            return valid;
+          }
+          
+      }
+      
     render() { 
         return (
             <div className='wrapper'>
